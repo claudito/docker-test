@@ -1,0 +1,28 @@
+services:
+  chanchito:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - monguito
+    networks:
+      - app-network
+
+  monguito:
+    image: mongo
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=nico
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mongo-data:
